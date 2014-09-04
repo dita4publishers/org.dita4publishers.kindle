@@ -46,21 +46,23 @@
   <xsl:import href="../../org.dita-community.common.xslt/xsl/relpath_util.xsl"/>
   -->
   
-  <xsl:import href="../../org.dita4publishers.common.html/xsl/html-generation-utils.xsl"/>
-  
-  <xsl:import href="../../org.dita4publishers.common.xslt/xsl/map2graphicMapImpl.xsl"/>
-  <xsl:import href="../../org.dita4publishers.common.xslt/xsl/topicHrefFixup.xsl"/>
-  
-  <xsl:import href="../../org.dita4publishers.epub/xsl/html2xhtmlImpl.xsl"/>
-
+  <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/reportParametersBase.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.html:xsl/html-generation-utils.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.mapdriven:xsl/dataCollection.xsl"/>
   <!-- Import the base HTML output generation transform. -->
   <xsl:import href="plugin:org.dita.xhtml:xsl/dita2xhtml.xsl"/>
   <xsl:import href="kindle-generation-utils.xsl"/>
   
-  <xsl:include href="../../org.dita4publishers.common.html/xsl/commonHtmlOverrides.xsl"/>
-  <xsl:include href="../../org.dita4publishers.common.html/xsl/commonHtmlEnumeration.xsl"/>
-  <xsl:include href="../../org.dita4publishers.common.html/xsl/commonHtmlBookmapEnumeration.xsl"/>
   
+  <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/map2graphicMap.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/graphicMap2AntCopyScript.xsl"/>
+  <xsl:import href="plugin:org.dita4publishers.common.xslt:xsl/topicHrefFixup.xsl"/>
+  
+  <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlOverrides.xsl"/>
+  <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlEnumeration.xsl"/>
+  <xsl:include href="plugin:org.dita4publishers.common.html:xsl/commonHtmlBookmapEnumeration.xsl"/>
+
+
   <xsl:include href="map2kindleCommon.xsl"/>
   <xsl:include href="map2kindleOpfImpl.xsl"/>
   <xsl:include href="map2kindleContentImpl.xsl"/>
@@ -133,6 +135,14 @@
   -->
   <xsl:param name="generateIndex" as="xs:string" select="'no'"/>
   
+  <!-- Generate the glossary dynamically using all glossary entry
+    topics included in the map.
+  -->
+  <xsl:param name="generateGlossary" as="xs:string" select="'no'"/>
+  <xsl:variable name="generateGlossaryBoolean" 
+    select="matches($generateGlossary, 'yes|true|on|1', 'i')"
+  />
+
   <!-- URI of the graphic to use in the case where there is no cover
     graphic defined in the incoming DITA map or as a parameter
     to this transform.

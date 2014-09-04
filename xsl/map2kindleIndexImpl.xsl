@@ -123,27 +123,6 @@
         
   </xsl:template>
   
-  <xsl:function name="local:construct-index-group-key" as="xs:string">
-    <xsl:param name="index-term" as="element()"/>
-    <!-- FIXME: This is a very quick-and-dirty grouping key implementation.
-      
-         A full implementation must be extensible and must be locale-specific.
-      -->
-    <xsl:variable name="label" select="normalize-space($index-term/index-terms:label)" as="xs:string"/>
-    <xsl:variable name="key" as="xs:string">
-      <xsl:choose>
-        <xsl:when test="matches($label, '^[0-9]')">
-          <xsl:sequence select="'#numeric'"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:sequence select="lower-case(substring($label,1,1))"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    
-    <xsl:sequence select="$key"/>
-  </xsl:function>
-
   <xsl:function name="local:construct-index-group-sort-key" as="xs:string">
     <xsl:param name="index-term" as="element()"/>
     <!-- FIXME: This is a very quick-and-dirty sorting key implementation.
