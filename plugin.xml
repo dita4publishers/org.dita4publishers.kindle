@@ -6,6 +6,7 @@
 
   <require plugin="org.dita4publishers.common.mapdriven"/> 
   <require plugin="org.dita-community.common.xslt"/> 
+  <require plugin="org.dita-community.preprocess-extensions"/>
   <require plugin="org.dita4publishers.epub"/> 
   
   <template file="build_transtype-kindle_template.xml"/>

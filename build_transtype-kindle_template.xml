@@ -22,7 +22,11 @@
   <target name="dita2kindle"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
-		dita:depends="d4p.map-driven-build-init, build-init, preprocess,kindle"
+		dita:depends="
+		d4p.map-driven-build-init, 
+		build-init, 
+		dc-preprocess,
+		kindle"
     dita:extension="depends org.dita.dost.platform.InsertDependsAction">
   </target>
 
