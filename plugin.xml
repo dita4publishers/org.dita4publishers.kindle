@@ -4,6 +4,9 @@
   <extension-point id="d4p.kindle.xslt.param" name="Kindle XSLT parameters"/>
   <extension-point id="dita.conductor.xhtml.param" name="XHTML XSLT parameters"/>
 
+  <feature extension="package.support.name" value="Eliot Kimber"/>
+  <feature extension="package.support.email" value="ekimber@contrext.com"/>
+
   <require plugin="org.dita4publishers.common.mapdriven"/> 
   <require plugin="org.dita-community.common.xslt"/> 
   <require plugin="org.dita-community.preprocess-extensions"/>
