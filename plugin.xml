@@ -19,4 +19,13 @@
   <feature extension="dita.conductor.transtype.check" value="kindle" type="txt"/>
   <feature extension="dita.conductor.target.relative" value="build.xml" type="file"/>
 
+  <!-- New way of specifying metadata with parameters contributed by the EPUB transtype:
+        https://github.com/dita-ot/dita-ot/issues/1757
+   -->
+  <transtype name="kindle" extends="epub" desc="Kindle (DITA 4 Publishers)">
+    <param name="kindlegen.executable"
+      desc="File path to the kindlegen executable.
+      e.g. &quot;/Users/ekimber/apps/KindleGen_Mac_i386_v1.1/kindlegen&quot;."
+      type="file"/>
+  </transtype>
 </plugin>
