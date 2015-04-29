@@ -1,25 +1,25 @@
 <plugin id="org.dita4publishers.kindle">
-  <extension-point id="xsl.transtype-kindle"/>
   
-  <extension-point id="d4p.kindle.xslt.param" name="Kindle XSLT parameters"/>
   <extension-point id="dita.conductor.xhtml.param" name="XHTML XSLT parameters"/>
-
+  
   <feature extension="package.support.name" value="Eliot Kimber"/>
   <feature extension="package.support.email" value="ekimber@contrext.com"/>
-
-  <require plugin="org.dita4publishers.common.mapdriven"/> 
-  <require plugin="org.dita-community.common.xslt"/> 
-  <require plugin="org.dita-community.preprocess-extensions"/>
-  <require plugin="org.dita4publishers.epub"/> 
+  
+  <!-- all other required plugins are declared in the epub plugin so not re-declaring requirements
+    here-->
+  <require plugin="org.dita4publishers.epub"/>
   
   <template file="build_transtype-kindle_template.xml"/>
   
-  <template file="xsl/map2kindle_template.xsl"/>
-
   <feature extension="dita.conductor.transtype.check" value="kindle" type="txt"/>
-  <feature extension="dita.conductor.target.relative" value="build.xml" type="file"/>
-
-  <!-- New way of specifying metadata with parameters contributed by the transtype:
+  <feature extension="dita.conductor.target.relative" file="build.xml"/>
+  
+  <feature extension="xsl.transtype-epub" file="xsl/kindleExtensions.xsl"/> <!-- use the epub
+    plugin's xsl extension point so users can still specify their custom xsl stylesheet
+    with args.xsl -->
+  
+  <!-- For the new way of specifying metadata with parameters contributed by the transtype, see
+    the base epub plugin.xml or this github issue:
         https://github.com/dita-ot/dita-ot/issues/1757
    -->
   <transtype name="kindle" extends="epub" desc="Kindle (DITA 4 Publishers)">
@@ -28,4 +28,5 @@
       e.g. &quot;/Users/ekimber/apps/KindleGen_Mac_i386_v1.1/kindlegen&quot;."
       type="file"/>
   </transtype>
+
 </plugin>
