@@ -9,14 +9,14 @@
     here-->
   <require plugin="org.dita4publishers.epub"/>
   
+  <extension id="xsl.transtype-kindle"/> 
+  
   <template file="build_transtype-kindle_template.xml"/>
+  
+  <template file="xsl/map2kindle_template.xsl"/> <!-- relative path to the template file of your customization -->
   
   <feature extension="dita.conductor.transtype.check" value="kindle" type="txt"/>
   <feature extension="dita.conductor.target.relative" file="build.xml"/>
-  
-  <feature extension="xsl.transtype-epub" file="xsl/kindleExtensions.xsl"/> <!-- use the epub
-    plugin's xsl extension point so users can still specify their custom xsl stylesheet
-    with args.xsl -->
   
   <!-- For the new way of specifying metadata with parameters contributed by the transtype, see
     the base epub plugin.xml or this github issue:
