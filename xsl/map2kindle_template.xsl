@@ -4,11 +4,11 @@
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:import href="map2kindleImpl.xsl"/> <!-- relative path to your custom stylesheet -->
+  <xsl:import href="map2kindleImpl.xsl"/> 
   
   <dita:extension id="xsl.transtype-kindle"   
     behavior="org.dita.dost.platform.ImportXSLAction" 
-    xmlns:dita="http://dita-ot.sourceforge.net"/> <!-- update the text after the first hyphen to match your custom transtype -->
+    xmlns:dita="http://dita-ot.sourceforge.net"/> 
   
 
 </xsl:stylesheet>
