@@ -15,8 +15,9 @@
     xmlns:dita="http://dita-ot.sourceforge.net"
     >
 
+    <property name="args.xsl" location="${dita.dir}/plugins/org.dita4publishers.kindle/xsl/map2kindleImpl.xsl"/>
     <antcall target="dita2epub">
-      <param name="args.xsl" value="${dita.dir}/plugins/org.dita4publishers.kindle/xsl/map2kindleImpl.xsl"/>
+      <param name="args.xsl" value="${args.xsl}"/>
       <param name="d4p.epubtype" value="epub3" /> <!-- currently generating epub3, might need
         to change to epub2, but kindlegen is supposed to take an input of epub3 just fine -->
       <param name="d4p.include.kindle.css" value="true" /> <!-- this will copy the currently empty
