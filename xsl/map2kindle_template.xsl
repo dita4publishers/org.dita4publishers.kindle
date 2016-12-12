@@ -4,6 +4,7 @@
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <xsl:import href="plugin:org.dita.xhtml:xsl/dita2xhtml.xsl"/>
   <xsl:import href="map2kindleImpl.xsl"/> 
   
   <dita:extension id="xsl.transtype-kindle"   

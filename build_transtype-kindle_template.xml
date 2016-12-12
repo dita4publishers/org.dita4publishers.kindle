@@ -15,7 +15,7 @@
     xmlns:dita="http://dita-ot.sourceforge.net"
     >
 
-    <property name="args.xsl" location="${dita.dir}/plugins/org.dita4publishers.kindle/xsl/map2kindleImpl.xsl"/>
+    <property name="args.xsl" location="${dita.dir}/plugins/org.dita4publishers.kindle/xsl/map2kindle.xsl"/>
     <antcall target="dita2epub">
       <param name="args.xsl" value="${args.xsl}"/>
       <param name="d4p.epubtype" value="epub3" /> <!-- currently generating epub3, might need
