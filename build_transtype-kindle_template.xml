@@ -2,14 +2,6 @@
   >
   <!-- NOTE: This build file depends on targets defined in the epub transtype -->
   
-	<!-- Global properties that affect the base Toolkit processing go before the target elem: -->
-  
-  <condition property="kindlegen.executable" value="kindlegen">
-    <not><isset property="kindlegen.executable"></isset></not>
-  </condition>
-  <property name="kindlegen.executable" value="${kindlegen.executable}"></property>
-  <property name="kindlegenArgs" value=""></property>
-  
   <target name="dita2kindle"
     unless="noMap"
     xmlns:dita="http://dita-ot.sourceforge.net"
@@ -29,6 +21,11 @@
   </target> 
   
   <target name="kindlegen">
+    <condition property="kindlegen.executable" value="kindlegen">
+      <not><isset property="kindlegen.executable"></isset></not>
+    </condition>
+    <property name="kindlegen.executable" value="${kindlegen.executable}"></property>
+    <property name="kindlegenArgs" value=""></property>
     <!-- I am not sure why we need to get the args.input etc. again. That is I am not sure why
       the dita.map.filename.root property is not available. Something about ant order of operations
       that I am not getting. -->
