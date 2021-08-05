@@ -1,10 +1,15 @@
-<project name="dita2kindle" default="dita2kindle"
-  >
+<project name="dita2kindle" default="dita2kindle">
   <!-- NOTE: This build file depends on targets defined in the epub transtype -->
   
 	<!-- Global properties that affect the base Toolkit processing go before the target elem: -->
   
-  <condition property="kindlegen.executable" value="kindlegen">
+  <!-- NOTE: As 7/2021 the kindlegen tool has been replaced by the kindlepreview tool.
+    
+       Keeping the kindlegen.executable property name for now but updating the default
+       value to "kindlepreviewer"
+       
+    -->
+  <condition property="kindlegen.executable" value="kindlepreviewer">
     <not><isset property="kindlegen.executable"></isset></not>
   </condition>
   <property name="kindlegen.executable" value="${kindlegen.executable}"></property>
@@ -28,16 +33,75 @@
     
   </target> 
   
-  <target name="kindlegen">
+  <target name="checkKindleGenExecutables">
+    <condition property="isKindlegen">
+      <contains string="${kindlegen.executable}" substring="kindlegen"/>
+    </condition>
+    <condition property="isKindlepreviewer">
+      <contains string="${kindlegen.executable}" substring="kindlepreviewer"/>
+    </condition>
+    <condition property="haveKindleExecutable">
+      <or>
+        <istrue value="${isKindlegen}"/>
+        <istrue value="${isKindlepreviewer}"/>
+      </or>
+    </condition>
+  </target>
+  
+  <target name="kindlegen" depends="checkKindleGenExecutables, report-no-kindle-executable, use-kindlepreviewer, use-kindlegen">
+    <echo message="+ [DEBUG] kindlegen.executable property = &apos;${kindlegen.executable}&apos;"></echo>
+    <echo message="+ [DEBUG] isKindlegen=${isKindlegen}"></echo>
+    <echo message="+ [DEBUG] isKindlepreviewer=${isKindlepreviewer}"></echo>
+    <echo message="+ [DEBUG] haveKindleExecutable=${haveKindleExecutable}"></echo>
+  </target>
+  
+  <target name="report-no-kindle-executable" depends="checkKindleGenExecutables" unless="${haveKindleExecutable}">
+    <echo message="+ [WARNING] Value of kindlegen.executable ('${kindlegen.executable}') was not recognized as either 'kindlegen' or 'kindlepreview'."/>
+  </target>
+  
+  <target name="use-kindlepreviewer" if="${isKindlepreviewer}">
     <!-- I am not sure why we need to get the args.input etc. again. That is I am not sure why
       the dita.map.filename.root property is not available. Something about ant order of operations
       that I am not getting. -->
     
+    <echo message="+ [INFO] Using kindlepreviewer to build MOBI from EPUB..."></echo>
+    
     <basename property="base.filename.for.kindlegen" file="${args.input}" suffix=".ditamap" />
     
-    <echo message="+ [DEBUG] kindlegen.executable property = &apos;${kindlegen.executable}&apos;"></echo>
     <property name="epub.result.filename" value="${base.filename.for.kindlegen}.epub"></property>
     <property name="kindle.result.filename" value="${base.filename.for.kindlegen}.mobi"></property>
+    
+    <!-- NOTE: The command-line options for kindlepreviewer are different from kindlegen -->
+    <exec executable="${kindlegen.executable}" resultproperty="resultCode" failonerror="false">
+      <arg value="${output.dir}${file.separator}${epub.result.filename}"/>
+      <arg value="-convert"/>
+      <arg value="-output"/>
+      <arg value="${output.dir}"/>
+      <arg line="${kindlegenArgs}"/>
+    </exec>
+    <echo message="After kindlepreviewer, result code is &apos;${resultCode}&apos;"></echo>
+    
+    <!-- We could delete the epub file here but it is useful to have because a mobi file cannot
+      be easily decompressed like an epub file can. So if a change needs to be made, then the epub
+      file can be modified and kindlegen ran manually. It might be better to delete unless the 
+      debug param is true, which is what is done in the org.example.d4p.pdf2-multipass -->
+    
+    <echo>+ [INFO] KPF file should be in ${output.dir}/KPF. Use interactive Kindlepreviewer to export to .mobi or other format</echo>
+  </target>
+    
+  <target name="use-kindlegen" depends="checkKindleGenExecutables" if="${isKindlegen}">
+    <!-- I am not sure why we need to get the args.input etc. again. That is I am not sure why
+      the dita.map.filename.root property is not available. Something about ant order of operations
+      that I am not getting. -->
+    
+    
+    <echo>+ [INFO] Using kindlegen to build MOBI from EPUB...</echo>
+
+    <basename property="base.filename.for.kindlegen" file="${args.input}" suffix=".ditamap" />
+    
+    <property name="epub.result.filename" value="${base.filename.for.kindlegen}.epub"></property>
+    <property name="kindle.result.filename" value="${base.filename.for.kindlegen}.mobi"></property>
+    <!-- NOTE: The command-line options for kindlepreviewer are different from kindlegen -->
     <exec executable="${kindlegen.executable}" resultproperty="resultCode" failonerror="false">
       <arg file="${output.dir}${file.separator}${epub.result.filename}"></arg>
       <arg line="-o ${kindle.result.filename}"></arg>
