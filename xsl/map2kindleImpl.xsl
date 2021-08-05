@@ -7,7 +7,7 @@
   xmlns:relpath="http://dita2indesign/functions/relpath"
   xmlns:epubtrans="urn:d4p:epubtranstype"
   exclude-result-prefixes="xs xd df relpath index-terms epubtrans"
-  version="2.0">
+  version="3.0">
   
   <!-- =============================================================
     
